@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+    <h1>Boletas</h1>
+<table>    
+    <thead>
+        <tr>
+            <th>Usuario</th>
+            <th>Fecha</th>
+            <th>Uso</th>
+            <th>Tipo</th>
+            <th>RUT</th>
+            <th>Nombre</th>
+            <th>Valor</th>
+            <th>Imagen</th>
+
+        </tr>
+    </thead>
+    <tbody>
+        {% for ti in tickets %}
+
+        <tr>
+            <td>{{ ti.user }}</td>
+            <td>{{ ti.date }}</td>
+            <td>{{ ti.use }}</td>
+            <td>{{ ti.type }}</td>
+            <td>{{ ti.rut }}</td>
+            <td>{{ ti.name }}</td>
+            <td>{{ ti.cash }}</td>
+            <td><a href="{{ ti.image.url }}">ver</a></td>
+        </tr>
+        
+        {% endfor %} 
+    </tbody>
+           
+</table>
+  
+</body>
+</html>

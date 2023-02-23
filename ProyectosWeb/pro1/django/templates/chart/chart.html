@@ -1,0 +1,141 @@
+{% extends 'include/base.html' %}
+
+{% load static %}
+
+{% block title %}Graficos{% endblock title %}
+
+{% block style %}
+
+<link rel="stylesheet" href="{% static 'css/chart.css' %}">
+
+{% endblock style %}
+
+{% block scripth %}   
+
+ <!--Chart js-->
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" integrity="sha256-Uv9BNBucvCPipKQ2NS9wYpJmi8DTOEfTA/nH2aoJALw=" crossorigin="anonymous"></script>
+ <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.css" integrity="sha256-aa0xaJgmK/X74WM224KMQeNQC2xYKwlAt08oZqjeF0E=" crossorigin="anonymous" />
+ <!-- jQuery -->
+ <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+
+{% endblock scripth %}
+
+{% block content %}  
+
+<div class="container">
+    <div class="row">
+
+        <div class="col-12 m-4">
+            <h1>Gráficos</h1>
+        </div>
+
+        <div class="col">
+            <form method="get" class="container">
+                <div class="row">
+                    <div class="col-sm-12 col-lg-2">
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend" style="width: 50%;">
+                                <label class="input-group-text" for="inputGroupSelect01">Sensor</label>
+                            </div>
+                            <select class="custom-select" id="inputGroupSelect01" aria-label="Sizing example input" name="kword3" style="width: 50%;">
+                                {% for s in sensores %}
+                                <option selected>{{ s.id }}</option>
+                                {% endfor %}
+                                <option selected>Sensor N</option> 
+                            </select>                            
+            
+                        </div>              
+                    </div>
+                    <div class="col-sm-12 col-lg-2">
+                        <div class="input-group mb-3">
+
+                            <div class="input-group-prepend" style="width: 50%;">
+                                <label class="input-group-text" for="inputGroupSelect01">Variable</label>
+                            </div>
+                            <select class="custom-select" id="inputGroupSelect01" aria-label="Sizing example input" name="kword4" style="width: 50%;">
+                                {% for m in medidas %}                              
+                                <option selected>{{ m }}</option>                                                                    
+                                {% endfor %}
+                                <option selected>Escoge...</option> 
+                                                                    
+                            </select>   
+            
+                        </div>              
+                    </div>
+                    <div class="col-sm-12 col-lg-3">
+                        <div class="input-group mb-3">
+            
+                            <span class="input-group-text" id="inputGroup-sizing-default">Fecha inicio</span>
+                            <input type="date" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" name="kword1">            
+            
+                        </div>  
+                    </div>
+                    <div class="col-sm-12 col-lg-3">
+                        <div class="input-group mb-3">                           
+            
+                            <span class="input-group-text" id="inputGroup-sizing-default">Fecha termino</span>
+                            <input type="date" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" name="kword2">
+            
+                        </div>  
+                    </div>
+
+                    <div class="col-sm-12 col-lg-2">
+                        <button type="submit" class="btn btn-primary">Ver</button>
+                    </div>                    
+                </div>
+        </div>
+   
+    </div>   
+    
+    
+    <div class="row">
+        <div class="col">
+            <canvas id="measure"></canvas>
+        </div>          
+    </div>
+</div>
+
+{% endblock content %}
+
+{% block script %}   
+
+<script>
+
+$(document).ready(function(){
+
+const data = {
+    datasets: [{
+      data: [
+
+        {% for da in data_variable %}
+            {{ da|safe }},
+        {% endfor %}
+    ],
+    }],
+    labels: [
+
+        {% for fe in data_fecha %}
+            "{{ fe|safe }}",
+        {% endfor %}
+
+    ],
+  }
+
+const ctx = document.getElementById('measure');
+
+new Chart(ctx, {
+  type: 'line',
+  data: data,
+  options: {
+    scales: {
+      y: {
+        beginAtZero: true
+      }
+    }
+  }
+});
+});
+
+</script>
+
+{% endblock script %}
